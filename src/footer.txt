@@ -1,0 +1,19 @@
+
+if(RadDog) {
+	RadDog.prototype.get = get;
+	RadDog.prototype.search = search;
+}
+var _module = RadDog || {prepare: prepare};
+if(typeof define === 'function' && define.amd) {
+	// AMD
+	define(_module);
+}
+else if (typeof exports === 'object') {
+	// CommonJS
+	module.exports = _module;
+}
+else {
+	// Global
+	window.RadDog = _module;
+}
+})();
