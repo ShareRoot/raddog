@@ -1,6 +1,6 @@
 var assert = require('assert');
 var _ = require('lodash');
-var RadDog = require('./src/base');
+var RadDog = require('./dist/raddog');
 
 describe('single item radix trie _operations', function(){
 	before(function(done) {
@@ -52,7 +52,6 @@ describe('multiple item radix trie _operations', function(){
 	});
 	it('should _delete "dog" and collapse', function() {
 		dog._delete('dog');
-		console.log(dog.index);
 		path = dog._lookup('doggy', 'doggy-uid');
 		assert.equal(path.length, 3);
 	});

@@ -36,12 +36,8 @@ gulp.task('scripts', ['lint'], function() {
 });
 
 gulp.task('build', ['scripts']);
-gulp.task('test', ['build'], function(cb) {
-	var exec = require('child_process').exec;
-	exec('mocha', function (error, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-		cb(error);
-	});
+gulp.task('test', ['build'], function() {
+	var mocha = require('gulp-mocha');
+	return gulp.src('test.js', {read: false}).pipe(mocha());
 });
 gulp.task('default', ['build']);
