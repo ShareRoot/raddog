@@ -56,3 +56,36 @@ describe('multiple item radix trie _operations', function(){
 		assert.equal(path.length, 3);
 	});
 });
+
+describe('multiple item radix trie _operations', function(){
+	before(function(done) {
+		dog = new RadDog('uid', 'title');
+		dog.insert({title:'nike roshe', uid: 'nike roshe uid'});
+		dog.insert({title:'nike dunk high', uid: 'nike dunk womens uid'});
+		dog.insert({title:'NIKE dunk high', uid: 'nike dunk mens uid'});
+		dog.insert({title:'nike dunk sb low', uid: 'nike dunk mens uid'});
+		dog.insert({title:'nike air force one', uid: 'nike air force one uid'});
+		dog.insert({title:'nike freeruns', uid: 'nike freeruns uid'});
+		dog.insert({title:'nike floaters', uid: 'nike floaters uid'});
+		dog.insert({title:'nike flow', uid: 'nike flow uid'});
+		done();
+	});
+	it('should find nike roshe item', function() {
+		var cursor = dog.search('nike roshe');
+		var item = cursor.next();
+		assert.equal(item.uid, 'nike roshe uid');
+	});
+	it('should be able to assign two uids to one title', function() {
+		var cursor = dog.search('nike dunk high');
+		var item = cursor.next();
+		assert.equal(cursor.end, false);
+		var uid1 = item.uid;
+		item = cursor.next();
+		assert.notEqual(uid1, item.uid);
+		item = cursor.next();
+		assert.equal(cursor.end, true);
+		assert.equal(item, null);
+	});
+
+
+});

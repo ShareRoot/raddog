@@ -163,6 +163,9 @@ RadDog.prototype.insert = function(item) {
 	// If the item is already indexed, then first unindex it
 	if((existing = this.items[item[this.uid]])) {
 		tokens = existing[this.title].toLowerCase().split(' ');
+		tokens = tokens.filter(function(val){
+			return !!val.length;
+		});
 		for(i = 0; i < tokens.length; ++i) {
 			this._delete(tokens[i], item[this.uid]);
 		}
@@ -170,6 +173,9 @@ RadDog.prototype.insert = function(item) {
 
 	// Add all the tokens to the index
 	tokens = item[this.title].toLowerCase().split(' ');
+	tokens = tokens.filter(function(val){
+		return !!val.length;
+	});
 	for(i = 0; i < tokens.length; ++i) {
 		this._insert(tokens[i], item[this.uid]);
 	}
@@ -181,6 +187,9 @@ RadDog.prototype.delete = function(item) {
 	if(!this.items[item[this.uid]])
 		return;
 	var tokens = item[this.title].toLowerCase().split(' ');
+	tokens = tokens.filter(function(val){
+		return !!val.length;
+	});
 	for(var i = 0; i < tokens.length; ++i) {
 		this._delete(tokens[i], item[this.uid]);
 	}

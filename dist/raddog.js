@@ -169,6 +169,9 @@ RadDog.prototype.insert = function(item) {
 	// If the item is already indexed, then first unindex it
 	if((existing = this.items[item[this.uid]])) {
 		tokens = existing[this.title].toLowerCase().split(' ');
+		tokens = tokens.filter(function(val){
+			return !!val.length;
+		});
 		for(i = 0; i < tokens.length; ++i) {
 			this._delete(tokens[i], item[this.uid]);
 		}
@@ -176,6 +179,9 @@ RadDog.prototype.insert = function(item) {
 
 	// Add all the tokens to the index
 	tokens = item[this.title].toLowerCase().split(' ');
+	tokens = tokens.filter(function(val){
+		return !!val.length;
+	});
 	for(i = 0; i < tokens.length; ++i) {
 		this._insert(tokens[i], item[this.uid]);
 	}
@@ -187,6 +193,9 @@ RadDog.prototype.delete = function(item) {
 	if(!this.items[item[this.uid]])
 		return;
 	var tokens = item[this.title].toLowerCase().split(' ');
+	tokens = tokens.filter(function(val){
+		return !!val.length;
+	});
 	for(var i = 0; i < tokens.length; ++i) {
 		this._delete(tokens[i], item[this.uid]);
 	}
@@ -215,6 +224,7 @@ function Cursor(data, query, filter) {
 				return;
 			}
 			else {
+				node = node.node;
 				for(j = 0; j < node[ITEMS].length; ++j) {
 					uid = node[ITEMS][j];
 					this.matchSet[uid] = this.matchSet[uid] || 0;
@@ -233,13 +243,15 @@ Cursor.prototype._enqueueChildren = function(unmatched) {
 			keys.push(key);
 	}
 	if(unmatched) {
-		keys.filter(function(value) {
+		keys = keys.filter(function(value) {
 			return value.indexOf(unmatched) === 0;
 		});
 	}
 	keys.sort();
-	for(var i = 0; i < keys.length; ++i)
-		this.queue.push(this.currentNode[keys[i]]);
+	for(var i = 0; i < keys.length; ++i){
+		if(keys[i][0] !== ' ')
+			this.queue.push(this.currentNode[keys[i]]);
+	}
 };
 
 Cursor.prototype._lookup = function(token, partial) {
@@ -258,7 +270,7 @@ Cursor.prototype._lookup = function(token, partial) {
 		if(!match)
 			return partial ? {node: currentNode, unmatched: unmatched} : null;
 	}
-	return currentNode;
+	return {node: currentNode, unmatched: unmatched};
 };
 
 Cursor.prototype.next = function() {
@@ -266,25 +278,30 @@ Cursor.prototype.next = function() {
 	if(this.end)
 		return null;
 
+	console.log(this.queue);
+	console.log("index: ", this.currentIndex);
+	console.log("items: ", this.currentNode[ITEMS]);
 	while(this.currentIndex < this.currentNode[ITEMS].length) {
 		uid = this.currentNode[ITEMS][this.currentIndex];
 		this.currentIndex += 1;
 		// If this.matchSet, ensure that it has a matchSet count of query.length - 1
 		if(this.matchSet === null || this.matchSet[uid] >= (this.query.length - 1)) {
 			item = this.data.items[uid];
-			if(!this.filter || this.filter(item))
+			if(!this.filter || this.filter(item)){
+				console.log("Current item:", item)
 				return item;
+			}
 		}
 	}
 
-	if(this.currentIndex >= this.currentNode[ITEMS].length) {
+	if(this.currentIndex >= this.currentNode[ITEMS].length-1) {
+		this.currentNode = this.queue.shift();
+		this._enqueueChildren();
+		this.currentIndex = 0;
 		if(this.queue.length === 0) {
 			this.end = true;
 			return null;
 		}
-		this.currentNode = this.queue.shift();
-		this._enqueueChildren();
-		this.currentIndex = 0;
 		return this.next();
 	}
 };
@@ -310,6 +327,9 @@ function search(query, filter) {
 	// Optional filter callback - can provide all ways of filtering the results
 	// e.g. ordered (words must appear in the same order), or anchored (words must start at the begining of the title)
 	query = query.toLowerCase().split(' ');
+	query = query.filter(function(val){
+		return !!val.length;
+	});
 	return new Cursor(this, query, filter);
 }
 
