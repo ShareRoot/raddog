@@ -62,8 +62,8 @@ describe('multiple item radix trie _operations', function(){
 		dog = new RadDog('uid', 'title');
 		dog.insert({title:'nike roshe', uid: 'nike roshe uid'});
 		dog.insert({title:'nike dunk high', uid: 'nike dunk womens uid'});
-		dog.insert({title:'NIKE dunk high', uid: 'nike dunk mens uid'});
 		dog.insert({title:'nike dunk sb low', uid: 'nike dunk mens uid'});
+		dog.insert({title:'NIKE dunk high', uid: 'nike dunk mens uid'});
 		dog.insert({title:'nike air force one', uid: 'nike air force one uid'});
 		dog.insert({title:'nike freeruns', uid: 'nike freeruns uid'});
 		dog.insert({title:'nike floaters', uid: 'nike floaters uid'});
@@ -82,6 +82,26 @@ describe('multiple item radix trie _operations', function(){
 		var uid1 = item.uid;
 		item = cursor.next();
 		assert.notEqual(uid1, item.uid);
+		item = cursor.next();
+		assert.equal(cursor.end, true);
+		assert.equal(item, null);
+	});
+	it('should be able to do partial searches', function() {
+		var cursor = dog.search('nike f');
+		var item = cursor.next();
+		var uid1 = item.uid;
+		var title1 = item.title;
+		item = cursor.next();
+		assert.notEqual(uid1, item.uid);
+		assert.notEqual(title1, item.title);
+		var uid2 = item.uid;
+		var title2 = item.title;
+		item = cursor.next();
+		assert.notEqual(uid1, item.uid);
+		assert.notEqual(title1, item.title);
+		assert.notEqual(uid2, item.uid);
+		assert.notEqual(title2, item.title);
+		item = cursor.next();
 		item = cursor.next();
 		assert.equal(cursor.end, true);
 		assert.equal(item, null);
