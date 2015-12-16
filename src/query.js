@@ -44,7 +44,7 @@ Cursor.prototype._enqueueChildren = function(unmatched) {
 		});
 	}
 	keys.sort();
-	for(var i = 0; i < keys.length; ++i){
+	for(var i = 0; i < keys.length; ++i) {
 		if(keys[i][0] !== ' ')
 			this.queue.push(this.currentNode[keys[i]]);
 	}
@@ -80,7 +80,7 @@ Cursor.prototype.next = function() {
 		// If this.matchSet, ensure that it has a matchSet count of query.length - 1
 		if(this.matchSet === null || this.matchSet[uid] >= (this.query.length - 1)) {
 			item = this.data.items[uid];
-			if(!this.filter || this.filter(item)){
+			if(!this.filter || this.filter(item)) {
 				return item;
 			}
 		}
@@ -119,7 +119,7 @@ function search(query, filter) {
 	// Optional filter callback - can provide all ways of filtering the results
 	// e.g. ordered (words must appear in the same order), or anchored (words must start at the begining of the title)
 	query = query.toLowerCase().split(' ');
-	query = query.filter(function(val){
+	query = query.filter(function(val) {
 		return !!val.length;
 	});
 	return new Cursor(this, query, filter);

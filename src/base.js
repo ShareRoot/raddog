@@ -148,7 +148,7 @@ RadDog.prototype._delete = function(token, uid) {
 	if(path.length > 1) {
 		var node = path[path.length - 1].node;
 		for(var i = 0; i < node[ITEMS].length; ++i) {
-			if(node[ITEMS][i][this.uid] === uid) {
+			if(node[ITEMS][i] === uid) {
 				node[ITEMS].splice(i, 1);
 				this._bubble(path, -1);
 				break;
@@ -159,39 +159,41 @@ RadDog.prototype._delete = function(token, uid) {
 
 RadDog.prototype.insert = function(item) {
 	var tokens, existing, i;
+	var uid = item[this.uid];
 
 	// If the item is already indexed, then first unindex it
-	if((existing = this.items[item[this.uid]])) {
+	if((existing = this.items[uid])) {
 		tokens = existing[this.title].toLowerCase().split(' ');
-		tokens = tokens.filter(function(val){
+		tokens = tokens.filter(function(val) {
 			return !!val.length;
 		});
 		for(i = 0; i < tokens.length; ++i) {
-			this._delete(tokens[i], item[this.uid]);
+			this._delete(tokens[i], uid);
 		}
 	}
 
 	// Add all the tokens to the index
 	tokens = item[this.title].toLowerCase().split(' ');
-	tokens = tokens.filter(function(val){
+	tokens = tokens.filter(function(val) {
 		return !!val.length;
 	});
 	for(i = 0; i < tokens.length; ++i) {
-		this._insert(tokens[i], item[this.uid]);
+		this._insert(tokens[i], uid);
 	}
 
-	this.items[item[this.uid]] = item;
+	this.items[uid] = item;
 };
 
 RadDog.prototype.delete = function(item) {
-	if(!this.items[item[this.uid]])
+	var uid = item[this.uid];
+	if(!this.items[uid])
 		return;
 	var tokens = item[this.title].toLowerCase().split(' ');
-	tokens = tokens.filter(function(val){
+	tokens = tokens.filter(function(val) {
 		return !!val.length;
 	});
 	for(var i = 0; i < tokens.length; ++i) {
-		this._delete(tokens[i], item[this.uid]);
+		this._delete(tokens[i], uid);
 	}
-	delete this.items[item[this.uid]];
+	delete this.items[uid];
 };
