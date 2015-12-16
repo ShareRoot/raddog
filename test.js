@@ -22,7 +22,7 @@ describe('single item radix trie _operations', function(){
 		assert.equal(dog.index.sweater[' items'][0], 'sweater-uid');
 	});
 	it('should _delete "sweater"', function() {
-		dog._delete('sweater');
+		dog._delete('sweater', 'sweater-uid');
 		assert.equal(dog._lookup('sweater'), null);
 		assert.equal(dog.index[' count'], 0);
 		assert.equal(dog.index[' items'].length, 0);
@@ -51,7 +51,7 @@ describe('multiple item radix trie _operations', function(){
 		assert.equal(path.length, 3);
 	});
 	it('should _delete "dog" and collapse', function() {
-		dog._delete('dog');
+		dog._delete('dog', 'dog-uid');
 		path = dog._lookup('doggy', 'doggy-uid');
 		assert.equal(path.length, 3);
 	});
