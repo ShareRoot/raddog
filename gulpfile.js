@@ -1,7 +1,13 @@
 var gulp = require('gulp');
 var fs = require('fs');
+var concat = require('gulp-concat');
+var insert = require('gulp-insert');
+var uglify = require('gulp-uglify');
 
-var scripts = 'src/**/*.js';
+var scripts = {
+	main: 'src/**/*.js',
+	query: 'src/query.js'
+}
 var files = {
 	main: 'raddog.js',
 	mainMin: 'raddog.min.js',
@@ -16,17 +22,13 @@ var scriptsFooter = fs.readFileSync('src/footer.txt', 'utf8');
 gulp.task('lint', function() {
 	// Run linting on the all Javascript
 	var jshint = require('gulp-jshint');
-	return gulp.src(scripts)
+	return gulp.src(scripts.main)
 		.pipe(jshint())
 		.pipe(jshint.reporter());
 });
 
-gulp.task('scripts', ['lint'], function() {
-	// Straight copy the app JavaScript and assemble the cards
-	var concat = require('gulp-concat');
-	var insert = require('gulp-insert');
-	var uglify = require('gulp-uglify');
-	return gulp.src(scripts)
+gulp.task('main', ['lint'], function() {
+	return gulp.src(scripts.main)
 		.pipe(concat(files.main))
 		.pipe(insert.wrap(scriptsHeader, scriptsFooter))
 		.pipe(gulp.dest(destDir))
@@ -35,7 +37,17 @@ gulp.task('scripts', ['lint'], function() {
 		.pipe(gulp.dest(destDir));
 });
 
-gulp.task('build', ['scripts']);
+gulp.task('query', ['main'], function() {
+	return gulp.src(scripts.query)
+		.pipe(insert.wrap(scriptsHeader, scriptsFooter))
+		.pipe(concat(files.query))
+		.pipe(gulp.dest(destDir))
+		.pipe(uglify())
+		.pipe(concat(files.queryMin))
+		.pipe(gulp.dest(destDir));
+});
+
+gulp.task('build', ['query']);
 gulp.task('test', ['build'], function() {
 	var mocha = require('gulp-mocha');
 	return gulp.src('test.js', {read: false}).pipe(mocha());

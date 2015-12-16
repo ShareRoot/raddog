@@ -2,14 +2,12 @@
   "name": "raddog",
   "version": "1.0.0",
   "description": "Simple, modifiable item-title search index based on radix tries.",
-  "main": [
-    "raddog.js",
-    "querydog.js"
-  ],
+  "homepage": "https://github.com/ShareRoot/raddog",
+  "license": "MIT",
+  "main": "dist/raddog.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-uglify": "^1.5.1",
