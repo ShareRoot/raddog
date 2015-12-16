@@ -6,7 +6,7 @@ function Cursor(data, query, filter) {
 	root = this._lookup(query[query.length - 1], true);
 	this.currentNode = root.node;
 	this.currentIndex = 0;
-	this.queue = [this.currentNode];
+	this.queue = [];
 	this._enqueueChildren(root.unmatched);
 	this.end = false;
 	this.matchSet = null;
@@ -86,14 +86,14 @@ Cursor.prototype.next = function() {
 		}
 	}
 
-	if(this.currentIndex >= this.currentNode[ITEMS].length-1) {
-		this.currentNode = this.queue.shift();
-		this._enqueueChildren();
-		this.currentIndex = 0;
+	if(this.currentIndex >= this.currentNode[ITEMS].length) {
 		if(this.queue.length === 0) {
 			this.end = true;
 			return null;
 		}
+		this.currentNode = this.queue.shift();
+		this._enqueueChildren();
+		this.currentIndex = 0;
 		return this.next();
 	}
 };

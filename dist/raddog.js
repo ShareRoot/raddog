@@ -210,7 +210,7 @@ function Cursor(data, query, filter) {
 	root = this._lookup(query[query.length - 1], true);
 	this.currentNode = root.node;
 	this.currentIndex = 0;
-	this.queue = [this.currentNode];
+	this.queue = [];
 	this._enqueueChildren(root.unmatched);
 	this.end = false;
 	this.matchSet = null;
@@ -278,9 +278,6 @@ Cursor.prototype.next = function() {
 	if(this.end)
 		return null;
 
-	console.log(this.queue);
-	console.log("index: ", this.currentIndex);
-	console.log("items: ", this.currentNode[ITEMS]);
 	while(this.currentIndex < this.currentNode[ITEMS].length) {
 		uid = this.currentNode[ITEMS][this.currentIndex];
 		this.currentIndex += 1;
@@ -288,20 +285,19 @@ Cursor.prototype.next = function() {
 		if(this.matchSet === null || this.matchSet[uid] >= (this.query.length - 1)) {
 			item = this.data.items[uid];
 			if(!this.filter || this.filter(item)){
-				console.log("Current item:", item)
 				return item;
 			}
 		}
 	}
 
-	if(this.currentIndex >= this.currentNode[ITEMS].length-1) {
-		this.currentNode = this.queue.shift();
-		this._enqueueChildren();
-		this.currentIndex = 0;
+	if(this.currentIndex >= this.currentNode[ITEMS].length) {
 		if(this.queue.length === 0) {
 			this.end = true;
 			return null;
 		}
+		this.currentNode = this.queue.shift();
+		this._enqueueChildren();
+		this.currentIndex = 0;
 		return this.next();
 	}
 };
