@@ -2,6 +2,14 @@
   "name": "raddog",
   "version": "1.0.0",
   "description": "Simple, modifiable item-title search index based on radix tries.",
+  "keywords": [
+    "search",
+    "radix",
+    "trie",
+    "autocomplete",
+    "indexing",
+    "selectize"
+  ],
   "homepage": "https://github.com/ShareRoot/raddog",
   "license": "MIT",
   "main": [
