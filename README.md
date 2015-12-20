@@ -2,6 +2,19 @@ About
 -------------------------------
 RadDog is a simple, modifiable item-title search index based on radix tries. Its primary use case is for building auto-completion indexes that can be loaded and queried directly from the browser. For example, the query `sweat` may yield the items corresponding to the following titles that have been indexed: `Ugly Christmas Sweater`, `Blue Sweatpants`, and `Sweater`.
 
+Install
+-------------------------------
+
+Install with either bower or npm.
+
+```shell
+bower install raddog
+```
+
+```shell
+npm install raddog
+```
+
 Example Code
 -------------------------------
 
@@ -88,7 +101,7 @@ A variable that will be set to true once the end is reached.
 QueryDog
 -------------------------------
 
-As a convenience, raddog also comes with querydog.js a smaller readonly version of RadDog that only contains the query methods described above. Since the constructor is not included in querydog.js you must use the following method to prepare the index data loaded.
+As a convenience, RadDog also comes with querydog.js a smaller readonly version of RadDog that only contains the query methods described above. Since the constructor is not included in querydog.js you must use the following method to prepare the index data loaded.
 
 #### Prepare
 
