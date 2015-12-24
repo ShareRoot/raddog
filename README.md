@@ -1,7 +1,7 @@
 raddog
 -------------------------------
 
-![NPM License](https://img.shields.io/npm/l/express.svg?style=flat)
+![NPM License](https://img.shields.io/npm/l/raddog.svg?style=flat)
 [![NPM version](http://img.shields.io/npm/v/raddog.svg?style=flat)](https://www.npmjs.org/package/raddog)
 ![Bower version](http://img.shields.io/bower/v/raddog.svg?style=flat)
 
