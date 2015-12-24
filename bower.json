@@ -16,6 +16,11 @@
     "dist/raddog.js",
     "dist/querydog.js"
   ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",

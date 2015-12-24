@@ -1,5 +1,10 @@
-About
+raddog
 -------------------------------
+
+![NPM License](https://img.shields.io/npm/l/express.svg?style=flat)
+[![NPM version](http://img.shields.io/npm/v/raddog.svg?style=flat)](https://www.npmjs.org/package/raddog)
+![Bower version](http://img.shields.io/bower/v/raddog.svg?style=flat)
+
 RadDog is a simple, modifiable item-title search index based on radix tries. Its primary use case is for building auto-completion indexes that can be loaded and queried directly from the browser. For example, the query `sweat` may yield the items corresponding to the following titles that have been indexed: `Ugly Christmas Sweater`, `Blue Sweatpants`, and `Sweater`.
 
 Install

@@ -10,7 +10,11 @@
     "indexing",
     "selectize"
   ],
+  "repository": "ShareRoot/raddog",
   "homepage": "https://github.com/ShareRoot/raddog",
+  "bugs": {
+    "url": "https://github.com/ShareRoot/raddog/issues"
+  },
   "license": "MIT",
   "main": "dist/raddog.js",
   "scripts": {
