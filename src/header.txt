@@ -3,4 +3,4 @@
 
 var COUNT = ' count';
 var ITEMS = ' items';
-
+var RadDog;

@@ -3,7 +3,7 @@
 
 var COUNT = ' count';
 var ITEMS = ' items';
-
+var RadDog;
 function Cursor(data, query, filter) {
 	var i, j, node, uid, root;
 	this.data = data;
@@ -114,7 +114,6 @@ Cursor.prototype.remaining = function() {
 
 /* exported get */
 /* exported search */
-/* exported QueryDog */
 
 function get(uid) {
 	return this.items[uid];
@@ -131,15 +130,15 @@ function search(query, filter) {
 	return new Cursor(this, query, filter);
 }
 
-function QueryDog(data) {
+RadDog = RadDog || function(data) {
 	// Copy all of the fields
 	this.uid = data.uid;
 	this.title = data.title;
 	this.index = data.index;
 	this.items = data.items;
-}
+};
 
-var _module = RadDog || QueryDog;
+var _module = RadDog;
 _module.prototype.get = get;
 _module.prototype.search = search;
 

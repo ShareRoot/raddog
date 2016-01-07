@@ -3,13 +3,13 @@
 
 var COUNT = ' count';
 var ITEMS = ' items';
-
+var RadDog;
 function Node() {
 	this[ITEMS] = [];
 	this[COUNT] = 0;
 }
 
-function RadDog(uidData, title) {
+RadDog = function(uidData, title) {
 	if(typeof uidData === 'string') {
 		this.uid = uidData;
 		this.title = title;
@@ -22,7 +22,7 @@ function RadDog(uidData, title) {
 		this.index = uidData.index;
 		this.items = uidData.items;
 	}
-}
+};
 
 RadDog.prototype._getBranchCount = function(node) {
 	var count = 0;
@@ -314,7 +314,6 @@ Cursor.prototype.remaining = function() {
 
 /* exported get */
 /* exported search */
-/* exported QueryDog */
 
 function get(uid) {
 	return this.items[uid];
@@ -331,15 +330,15 @@ function search(query, filter) {
 	return new Cursor(this, query, filter);
 }
 
-function QueryDog(data) {
+RadDog = RadDog || function(data) {
 	// Copy all of the fields
 	this.uid = data.uid;
 	this.title = data.title;
 	this.index = data.index;
 	this.items = data.items;
-}
+};
 
-var _module = RadDog || QueryDog;
+var _module = RadDog;
 _module.prototype.get = get;
 _module.prototype.search = search;
 

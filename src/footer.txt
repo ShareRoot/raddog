@@ -1,5 +1,5 @@
 
-var _module = RadDog || QueryDog;
+var _module = RadDog;
 _module.prototype.get = get;
 _module.prototype.search = search;
 

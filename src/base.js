@@ -3,7 +3,7 @@ function Node() {
 	this[COUNT] = 0;
 }
 
-function RadDog(uidData, title) {
+RadDog = function(uidData, title) {
 	if(typeof uidData === 'string') {
 		this.uid = uidData;
 		this.title = title;
@@ -16,7 +16,7 @@ function RadDog(uidData, title) {
 		this.index = uidData.index;
 		this.items = uidData.items;
 	}
-}
+};
 
 RadDog.prototype._getBranchCount = function(node) {
 	var count = 0;
