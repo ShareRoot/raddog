@@ -108,7 +108,7 @@ Cursor.prototype.remaining = function() {
 
 /* exported get */
 /* exported search */
-/* exported prepare */
+/* exported QueryDog */
 
 function get(uid) {
 	return this.items[uid];
@@ -125,8 +125,10 @@ function search(query, filter) {
 	return new Cursor(this, query, filter);
 }
 
-function prepare(data) {
-	// Attach query methods to the data object
-	data.get = get;
-	data.search = search;
+function QueryDog(data) {
+	// Copy all of the fields
+	this.uid = data.uid;
+	this.title = data.title;
+	this.index = data.index;
+	this.items = data.items;
 }

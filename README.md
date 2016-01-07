@@ -106,13 +106,7 @@ A variable that will be set to true once the end is reached.
 QueryDog
 -------------------------------
 
-As a convenience, RadDog also comes with querydog.js a smaller readonly version of RadDog that only contains the query methods described above. Since the constructor is not included in querydog.js you must use the following method to prepare the index data loaded.
-
-#### Prepare
-
-**prepare(data)**
-
-Simply attaches the `get` and `search` methods to the loaded index data object. 
+As a convenience, RadDog also comes with querydog.js a smaller readonly version of RadDog that only contains the query methods described above. A similar constructor is included in querydog.js which only accepts existing RadDog data as the only argument.
 
 #### Example Code
 
@@ -120,7 +114,7 @@ Simply attaches the `get` and `search` methods to the loaded index data object.
 var dog = new RadDog('uid', 'title');
 //......create an index
 var serialized = JSON.stringify(dog);
-var queryOnlyDog = QueryDog.prepare(JSON.parse(serialized));
+var queryOnlyDog = new QueryDog(JSON.parse(serialized));
 var cursor = queryOnlyDog.search('Sweater');
 //......use cursor
 ```

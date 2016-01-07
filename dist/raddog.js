@@ -314,7 +314,7 @@ Cursor.prototype.remaining = function() {
 
 /* exported get */
 /* exported search */
-/* exported prepare */
+/* exported QueryDog */
 
 function get(uid) {
 	return this.items[uid];
@@ -331,20 +331,21 @@ function search(query, filter) {
 	return new Cursor(this, query, filter);
 }
 
-function prepare(data) {
-	// Attach query methods to the data object
-	data.get = get;
-	data.search = search;
+function QueryDog(data) {
+	// Copy all of the fields
+	this.uid = data.uid;
+	this.title = data.title;
+	this.index = data.index;
+	this.items = data.items;
 }
 
-if(RadDog) {
-	RadDog.prototype.get = get;
-	RadDog.prototype.search = search;
-}
-var _module = RadDog || {prepare: prepare};
+var _module = RadDog || QueryDog;
+_module.prototype.get = get;
+_module.prototype.search = search;
+
 if(typeof define === 'function' && define.amd) {
 	// AMD
-	define(_module);
+	define(function() { return _module; });
 }
 else if (typeof exports === 'object') {
 	// CommonJS

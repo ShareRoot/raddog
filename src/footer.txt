@@ -1,12 +1,11 @@
 
-if(RadDog) {
-	RadDog.prototype.get = get;
-	RadDog.prototype.search = search;
-}
-var _module = RadDog || {prepare: prepare};
+var _module = RadDog || QueryDog;
+_module.prototype.get = get;
+_module.prototype.search = search;
+
 if(typeof define === 'function' && define.amd) {
 	// AMD
-	define(_module);
+	define(function() { return _module; });
 }
 else if (typeof exports === 'object') {
 	// CommonJS
