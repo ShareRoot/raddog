@@ -106,6 +106,10 @@ describe('multiple item radix trie _operations', function(){
 		assert.equal(cursor.end, true);
 		assert.equal(item, null);
 	});
-
-
+	it('should return empty query set when searching for an empty string', function() {
+		var cursor = dog.search('');
+		var item = cursor.next();
+		assert.equal(cursor.end, true);
+		assert.equal(item, null);
+	});
 });

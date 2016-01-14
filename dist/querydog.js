@@ -37,6 +37,11 @@ function Cursor(data, query, filter) {
 	}
 }
 
+function EmptyCursor() {
+	this.end = true;
+}
+EmptyCursor.prototype = Cursor.prototype;
+
 Cursor.prototype._enqueueChildren = function(unmatched) {
 	// Push child nodes in order of their keys
 	var keys = [];
@@ -127,6 +132,9 @@ function search(query, filter) {
 	query = query.filter(function(val) {
 		return !!val.length;
 	});
+	// If no query terms then return an already ended EmptyCursor
+	if(!query.length)
+		return new EmptyCursor();
 	return new Cursor(this, query, filter);
 }
 
