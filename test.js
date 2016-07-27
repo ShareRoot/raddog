@@ -112,4 +112,12 @@ describe('multiple item radix trie _operations', function(){
 		assert.equal(cursor.end, true);
 		assert.equal(item, null);
 	});
+	it('should be able to delete items', function() {
+		var cursor;
+		cursor = dog.search('nike air force one');
+		assert.equal(cursor.end, false);
+		dog.delete({title:'nike air force one', uid: 'nike air force one uid'});
+		cursor = dog.search('nike air force one');
+		assert.equal(cursor.end, true);
+	});
 });
