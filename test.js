@@ -2,7 +2,7 @@ var assert = require('assert');
 var _ = require('lodash');
 var RadDog = require('./dist/raddog');
 
-describe('single item radix trie _operations', function(){
+describe('single item radix trie _operations', function() {
 	before(function(done) {
 		dog = new RadDog('uid', 'title');
 		done();
@@ -29,7 +29,7 @@ describe('single item radix trie _operations', function(){
 	});
 });
 
-describe('multiple item radix trie _operations', function(){
+describe('multiple item radix trie _operations', function() {
 	before(function(done) {
 		dog = new RadDog('uid', 'title');
 		done();
@@ -119,5 +119,26 @@ describe('multiple item radix trie _operations', function(){
 		dog.delete({title:'nike air force one', uid: 'nike air force one uid'});
 		cursor = dog.search('nike air force one');
 		assert.equal(cursor.end, true);
+	});
+});
+
+describe('integers and strings interchangeably as uids', function() {
+	before(function(done) {
+		dog = new RadDog('uid', 'title');
+		done();
+	});
+	it('should insert and get both strings and integer uids', function() {
+		dog.insert({title:'one', uid: 1});
+		dog.insert({title:'onehundredten', uid: 110});
+		dog.insert({title:'two', uid: '2'});
+		dog.insert({title:'twohundredtwenty', uid: '220'});
+		assert.equal(dog.get(1).title, 'one');
+		assert.equal(dog.get('1').title, 'one');
+		assert.equal(dog.get(110).title, 'onehundredten');
+		assert.equal(dog.get('110').title, 'onehundredten');
+		assert.equal(dog.get(2).title, 'two');
+		assert.equal(dog.get('2').title, 'two');
+		assert.equal(dog.get(220).title, 'twohundredtwenty');
+		assert.equal(dog.get('220').title, 'twohundredtwenty');
 	});
 });
