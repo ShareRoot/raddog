@@ -145,7 +145,7 @@ RadDog.prototype._insert = function(token, uid) {
 RadDog.prototype._delete = function(token, uid) {
 	// Underlying radix trie operation to delete an item
 	var path = this._lookup(token);
-	if(path.length > 1) {
+	if(path && path.length > 1) {
 		var node = path[path.length - 1].node;
 		for(var i = 0; i < node[ITEMS].length; ++i) {
 			if(node[ITEMS][i] === uid) {

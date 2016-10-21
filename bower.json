@@ -1,6 +1,6 @@
 {
   "name": "raddog",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Simple, modifiable item-title search index based on radix tries.",
   "keywords": [
     "search",

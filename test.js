@@ -68,6 +68,7 @@ describe('multiple item radix trie _operations', function(){
 		dog.insert({title:'nike freeruns', uid: 'nike freeruns uid'});
 		dog.insert({title:'nike floaters', uid: 'nike floaters uid'});
 		dog.insert({title:'nike flow', uid: 'nike flow uid'});
+		dog.insert({title:'repeat repeat', uid: 'repeat repeat uid'});
 		done();
 	});
 	it('should find nike roshe item', function() {
@@ -118,6 +119,14 @@ describe('multiple item radix trie _operations', function(){
 		assert.equal(cursor.end, false);
 		dog.delete({title:'nike air force one', uid: 'nike air force one uid'});
 		cursor = dog.search('nike air force one');
+		assert.equal(cursor.end, true);
+	});
+	it('should be able to delete items with title that have repeated tokens', function() {
+		var cursor;
+		cursor = dog.search('repeat repeat');
+		assert.equal(cursor.end, false);
+		dog.delete({title:'repeat repeat', uid: 'repeat repeat uid'});
+		cursor = dog.search('repeat repeat');
 		assert.equal(cursor.end, true);
 	});
 });
